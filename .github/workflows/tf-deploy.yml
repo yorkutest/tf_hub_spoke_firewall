@@ -4,9 +4,11 @@ on:
   workflow_dispatch:
 
   push:
-    branches-ignore:
+    branches:
       - 'main'
-      - 'release/*'
+#    branches-ignore:
+#      - 'main'
+#      - 'release/*'
 
 permissions:
   id-token: write
