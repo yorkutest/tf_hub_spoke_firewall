@@ -16,7 +16,7 @@ module "spoke1network" {
   location            = var.location
   address_space       = "10.100.0.0/16"
   subnet_prefixes     = ["10.100.1.0/24", "10.100.2.0/24"]
-  subnet_names        = ["KubernetesCluster", "LogicTier", "DatabaseTier"]
+  subnet_names        = ["KubernetesCluster", "LogicTier"]
 }
 module "spoke2network" {
   source              = "./modules/networkbuild"

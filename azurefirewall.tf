@@ -24,7 +24,7 @@ resource "azurerm_firewall" "hub" {
     subnet_id            = module.hubnetwork.vnet_subnets[0]
     public_ip_address_id = azurerm_public_ip.firewall.id
   }
-  depends_on = [module.hubmanagementvm, module.linuxvmspoke1, module.linuxvmspoke2]
+  depends_on = [module.hubmanagementvm, module.linuxvmspoke1]
   // The firewall seems to slow down the destroy process for all these objects. approx 66% speed up to allow hub to destroy first using this depends on statement
 }
 

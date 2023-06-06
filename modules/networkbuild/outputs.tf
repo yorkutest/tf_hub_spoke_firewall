@@ -29,5 +29,5 @@ output "vnet_rg_name" {
 }
 output "subnet_prefixes" {
   description = "The adress prefixes of subnets created inside the new vNet"
-  value       = [for subnet in azurerm_subnet.subnet : subnet.address_prefix]
+  value       = [for subnet in azurerm_subnet.subnet : subnet.address_prefixes]
 }
