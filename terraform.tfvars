@@ -11,7 +11,7 @@ spoke2_vnet_name = "spoke2vnet"
 computergname      = "nvalab-compute-rg"
 hub_vm_hostname    = "hubvm"
 spoke1_vm_hostname = "spoke1vmweb"
-spoke2_vm_hostname = "spoke2vmweb"
+#spoke2_vm_hostname = "spoke2vmweb"
 
 vm_size       = "Standard_B2s"
 vm_admin_user = "vmadmin"
