@@ -48,10 +48,10 @@ variable "spoke1_vm_hostname" {
   type        = string
 }
 
-variable "spoke2_vm_hostname" {
-  description = "Hostname of spoke2 VM "
-  type        = string
-}
+#variable "spoke2_vm_hostname" {
+#  description = "Hostname of spoke2 VM "
+#  type        = string
+#}
 
 variable "hub_vnet_name" {
   description = "Name of Hub vnet"
