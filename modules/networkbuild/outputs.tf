@@ -20,7 +20,7 @@ output "vnet_address_space" {
 
 output "vnet_subnets" {
   description = "The ids of subnets created inside the new vNet"
-  value       = azurerm_subnet.subnet.*.id
+  value       = [azurerm_subnet.subnet.*.id]
 }
 
 output "vnet_rg_name" {
@@ -29,5 +29,5 @@ output "vnet_rg_name" {
 }
 output "subnet_prefixes" {
   description = "The adress prefixes of subnets created inside the new vNet"
-  value       = azurerm_subnet.subnet.*.address_prefix
+  value       = [azurerm_subnet.subnet.*.address_prefix]
 }

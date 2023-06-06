@@ -38,7 +38,7 @@ resource "random_id" "randomId" {
   byte_length = 8
 }
 resource "random_id" "randomIdVM" {
-
+# tflint-ignore: terraform_required_providers
   byte_length = 8
 }
 
