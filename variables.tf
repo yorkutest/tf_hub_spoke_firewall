@@ -69,12 +69,12 @@ variable "spoke2_vnet_name" {
 
 variable "hub_mgmt_rules" {
   description = "Open SSH to Hub management network"
-  type        = string
+  type        = list(map)
 }
 
 variable "spoke_web_rules" {
   description = "Open SSH to Hub management network"
-  type        = string
+  type        = list(map)
 }
 
 variable "rt_table_rg_name" {
