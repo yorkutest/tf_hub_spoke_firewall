@@ -12,6 +12,15 @@ resource "azurerm_public_ip" "firewall" {
   domain_name_label   = "firewallpip-${random_id.randomidfirewall.hex}"
 }
 
+resource "azurerm_public_ip" "firewallmgmt" {
+  name                = "firewall_mgmt_pip"
+  location            = var.location
+  resource_group_name = module.hubnetwork.vnet_rg_name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  domain_name_label   = "firewallmgmtpip-${random_id.randomidfirewall.hex}"
+}
+
 resource "azurerm_firewall" "hub" {
   name                = "hub_firewall"
   location            = var.location
@@ -26,8 +35,9 @@ resource "azurerm_firewall" "hub" {
   }
 
   management_ip_configuration {
-    name = "mgmtIp"
-    subnet_id = module.hubnetwork.vnet_subnets[1]
+    name                 = "mgmtIp"
+    subnet_id            = module.hubnetwork.vnet_subnets[1]
+    public_ip_address_id = azurerm_public_ip.firewallmgmt.id
   }
   depends_on = [module.hubmanagementvm, module.linuxvmspoke1]
   // The firewall seems to slow down the destroy process for all these objects. approx 66% speed up to allow hub to destroy first using this depends on statement
