@@ -1,6 +1,6 @@
 resource "random_id" "randomidfirewall" {
-    
-        byte_length = 4
+
+  byte_length = 4
 }
 
 resource "azurerm_public_ip" "firewall" {
@@ -45,7 +45,7 @@ resource "azurerm_firewall_network_rule_collection" "rulecollection" {
     ]
 
     destination_addresses = [
-     module.spoke2network.subnet_prefixes[0]
+      module.spoke2network.subnet_prefixes[0]
     ]
 
     protocols = [
@@ -65,7 +65,7 @@ resource "azurerm_firewall_network_rule_collection" "rulecollection" {
     ]
 
     destination_addresses = [
-     module.spoke1network.subnet_prefixes[0]
+      module.spoke1network.subnet_prefixes[0]
     ]
 
     protocols = [
