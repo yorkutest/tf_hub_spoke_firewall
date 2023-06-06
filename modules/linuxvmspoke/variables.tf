@@ -18,7 +18,7 @@ variable "subnetid" {
 
 variable "vmsize" {
   description = "size of VM"
-  default     = "Standard_DS2_v2"
+  default     = "Standard_B2s"
   type        = string
 }
 
