@@ -38,17 +38,13 @@ resource "azurerm_firewall_network_rule_collection" "rulecollection" {
   rule {
     name = "spoke1-spoke2"
 
-    source_addresses = [
-      module.spoke1network.subnet_prefixes[0]
-    ]
+    source_addresses = module.spoke1network.subnet_prefixes[0]
 
     destination_ports = [
       "22"
     ]
 
-    destination_addresses = [
-      module.spoke2network.subnet_prefixes[0]
-    ]
+    destination_addresses = module.spoke2network.subnet_prefixes[0]
 
     protocols = [
       "TCP"
@@ -58,17 +54,12 @@ resource "azurerm_firewall_network_rule_collection" "rulecollection" {
   rule {
     name = "spoke2-spoke1"
 
-    source_addresses = [
-      module.spoke2network.subnet_prefixes[0]
-    ]
-
+    source_addresses = module.spoke2network.subnet_prefixes[0]
     destination_ports = [
       "22"
     ]
 
-    destination_addresses = [
-      module.spoke1network.subnet_prefixes[0]
-    ]
+    destination_addresses = module.spoke1network.subnet_prefixes[0]
 
     protocols = [
       "TCP"

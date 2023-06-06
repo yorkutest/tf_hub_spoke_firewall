@@ -2,7 +2,7 @@
 location       = "canadacentral"
 subscriptionId = "ce4ae544-b658-48c0-a894-29f67af78ad7"
 // networking variables 
-networkrgname    = "nvalab-network-rg"
+#networkrgname    = "nvalab-network-rg"
 hub_vnet_name    = "hubvnet"
 spoke1_vnet_name = "spoke1vnet"
 spoke2_vnet_name = "spoke2vnet"
