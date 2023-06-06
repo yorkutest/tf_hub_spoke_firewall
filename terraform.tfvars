@@ -1,6 +1,6 @@
 // general variables 
-location = "canadacentral"
-
+location       = "canadacentral"
+subscriptionId = "ce4ae544-b658-48c0-a894-29f67af78ad7"
 // networking variables 
 networkrgname    = "nvalab-network-rg"
 hub_vnet_name    = "hubvnet"
