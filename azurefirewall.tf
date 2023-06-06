@@ -15,6 +15,8 @@ resource "azurerm_public_ip" "firewall" {
 resource "azurerm_firewall" "hub" {
   name                = "hub_firewall"
   location            = var.location
+  sku_name            = "AZFW_VNet"
+  sku_tier            = "Basic"
   resource_group_name = module.hubnetwork.vnet_rg_name
 
   ip_configuration {
