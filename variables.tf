@@ -1,3 +1,6 @@
+variable "subscriptionId" {
+  type = string
+}
 variable "location" {
   description = "Location for all resources"
 }
