@@ -16,8 +16,8 @@ resource "azurerm_network_interface" "myterraformnic" {
 }
 
 # Generate random text for a unique storage account name and DNS label
-resource "random_id" "randomId" {
 # tflint-ignore: terraform_required_providers
+resource "random_id" "randomId" {
   keepers = {
     # Generate a new ID only when a new resource group is defined
     resource_group = var.rgname
