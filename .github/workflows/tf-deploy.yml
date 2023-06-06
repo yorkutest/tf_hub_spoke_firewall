@@ -22,7 +22,7 @@ jobs:
       storageAccountInfo: ${{ vars.TF_STORAGE_ACCOUNT_INFO }}
       deploymentType: 'Create'
       commandOptions: '-var-file=terraform.tfvars'
-      storageKey: 'dev/firewall/hub_spoke_firewall.tfstate'
-      targetEnv: development
+      storageKey: 'prod/firewall/hub_spoke_firewall.tfstate'
+      targetEnv: production
     secrets: inherit
 
