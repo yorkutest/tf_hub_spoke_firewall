@@ -6,7 +6,7 @@ module "hubmanagementvm" {
   source        = "./modules/linuxvmhub"
   rgname        = azurerm_resource_group.computeRG.name
   location      = var.location
-  subnetid      = module.hubnetwork.vnet_subnets[0]
+  subnetid      = module.hubnetwork.vnet_subnets[2]
   vmname        = var.hub_vm_hostname
   vmpassword    = var.vm_admin_pwd
   adminusername = var.vm_admin_user
@@ -17,7 +17,7 @@ module "linuxvmspoke1" {
   source        = "./modules/linuxvmspoke"
   rgname        = azurerm_resource_group.computeRG.name
   location      = var.location
-  subnetid      = module.spoke1network.vnet_subnets[2]
+  subnetid      = module.spoke1network.vnet_subnets[1]
   vmname        = var.spoke1_vm_hostname
   vmpassword    = var.vm_admin_pwd
   adminusername = var.vm_admin_user
