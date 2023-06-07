@@ -30,13 +30,13 @@ module "spoke2network" {
 
 // nsg associations 
 
-resource "azurerm_subnet_network_security_group_association" "hub_management_nsg_association" {
-  subnet_id                 = module.hubnetwork.vnet_subnets[1]
-  network_security_group_id = azurerm_network_security_group.hub_mgmt_nsg.id
-  depends_on                = [azurerm_firewall.hub]
-  // This depends on will prevent a deadlock between nsg and nic\firewall - as per open issue 
-  // https://github.com/terraform-providers/terraform-provider-azurerm/issues/2489
-}
+#resource "azurerm_subnet_network_security_group_association" "hub_management_nsg_association" {
+#  subnet_id                 = module.hubnetwork.vnet_subnets[1]
+#  network_security_group_id = azurerm_network_security_group.hub_mgmt_nsg.id
+#  depends_on                = [azurerm_firewall.hub]
+#  // This depends on will prevent a deadlock between nsg and nic\firewall - as per open issue 
+#  // https://github.com/terraform-providers/terraform-provider-azurerm/issues/2489
+#}
 
 resource "azurerm_subnet_network_security_group_association" "spoke_web_nsg_association" {
   subnet_id                 = module.spoke1network.vnet_subnets[0]
