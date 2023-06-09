@@ -56,8 +56,58 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
   name               = "fwpolicy-rcg"
   firewall_policy_id = azurerm_firewall_policy.policy.id
   priority           = 100
+
+  network_rule_collection {
+    name     = "Allow_ssh_communications_between_spokes"
+    priority = 100
+    action   = "Allow"
+    rule {
+      name                  = "spoke1-spoke2"
+      source_addresses      = module.spoke1network.subnet_prefixes[0]
+      destination_ports     = ["22"]
+      destination_addresses = module.spoke2network.subnet_prefixes[0]
+      protocols             = ["TCP"]
+    }
+
+    rule {
+      name                  = "spoke2-spoke1"
+      source_addresses      = module.spoke2network.subnet_prefixes[0]
+      destination_ports     = ["22"]
+      destination_addresses = module.spoke1network.subnet_prefixes[0]
+      protocols             = ["TCP"]
+    }
+  }
+
+  network_rule_collection {
+    name     = "Allow_kubernetess_network_communication"
+    priority = 300
+    action   = "Allow"
+    rule {
+      name                  = "Port_1194"
+      source_addresses      = module.spoke1network.subnet_prefixes[0]
+      destination_addresses = ["AzureCloud.canadacentral"]
+      destination_ports     = ["1194"]
+      protocols             = ["UDP"]
+    }
+
+    rule {
+      name                  = "Port_9000"
+      source_addresses      = module.spoke1network.subnet_prefixes[0]
+      destination_addresses = ["AzureCloud.canadacentral"]
+      destination_ports     = ["9000"]
+      protocols             = ["TCP"]
+    }
+    rule {
+      name              = "NTP"
+      source_addresses  = module.spoke1network.subnet_prefixes[0]
+      destination_fqdns = ["ntp.ubuntu.com"]
+      destination_ports = ["123"]
+      protocols         = ["UDP"]
+    }
+  }
+
   application_rule_collection {
-    name     = "Allow_kubernetess_communication"
+    name     = "Allow_kubernetess_app_communication"
     priority = 100
     action   = "Allow"
     rule {
@@ -132,55 +182,6 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
         port = "80"
         type = "Http"
       }
-    }
-  }
-
-  network_rule_collection {
-    name     = "Allow_ssh_communications_between_spokes"
-    priority = 100
-    action   = "Allow"
-    rule {
-      name                  = "spoke1-spoke2"
-      source_addresses      = module.spoke1network.subnet_prefixes[0]
-      destination_ports     = ["22"]
-      destination_addresses = module.spoke2network.subnet_prefixes[0]
-      protocols             = ["TCP"]
-    }
-
-    rule {
-      name                  = "spoke2-spoke1"
-      source_addresses      = module.spoke2network.subnet_prefixes[0]
-      destination_ports     = ["22"]
-      destination_addresses = module.spoke1network.subnet_prefixes[0]
-      protocols             = ["TCP"]
-    }
-  }
-
-  network_rule_collection {
-    name     = "Allow_kubernetess_communication"
-    priority = 300
-    action   = "Allow"
-    rule {
-      name                  = "Port_1194"
-      source_addresses      = module.spoke1network.subnet_prefixes[0]
-      destination_addresses = ["AzureCloud.canadacentral"]
-      destination_ports     = ["1194"]
-      protocols             = ["UDP"]
-    }
-
-    rule {
-      name                  = "Port_9000"
-      source_addresses      = module.spoke1network.subnet_prefixes[0]
-      destination_addresses = ["AzureCloud.canadacentral"]
-      destination_ports     = ["9000"]
-      protocols             = ["TCP"]
-    }
-    rule {
-      name              = "NTP"
-      source_addresses  = module.spoke1network.subnet_prefixes[0]
-      destination_fqdns = ["ntp.ubuntu.com"]
-      destination_ports = ["123"]
-      protocols         = ["UDP"]
     }
   }
 
