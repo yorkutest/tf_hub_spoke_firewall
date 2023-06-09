@@ -51,19 +51,19 @@ resource "azurerm_firewall_network_rule_collection" "rulecollection" {
   action              = "Allow"
 
   rule {
-    name = "spoke1-spoke2"
-    source_addresses = module.spoke1network.subnet_prefixes[0]
-    destination_ports = ["22"]
+    name                  = "spoke1-spoke2"
+    source_addresses      = module.spoke1network.subnet_prefixes[0]
+    destination_ports     = ["22"]
     destination_addresses = module.spoke2network.subnet_prefixes[0]
-    protocols = ["TCP"]
+    protocols             = ["TCP"]
   }
 
   rule {
-    name = "spoke2-spoke1"
-    source_addresses = module.spoke2network.subnet_prefixes[0]
-    destination_ports = ["22"]
+    name                  = "spoke2-spoke1"
+    source_addresses      = module.spoke2network.subnet_prefixes[0]
+    destination_ports     = ["22"]
     destination_addresses = module.spoke1network.subnet_prefixes[0]
-    protocols = ["TCP"]
+    protocols             = ["TCP"]
   }
 }
 
@@ -107,73 +107,73 @@ resource "azurerm_firewall_application_rule_collection" "example" {
   action              = "Allow"
 
   rule {
-    name = "azmk8s.io"
+    name             = "azmk8s.io"
     source_addresses = module.spoke1network.subnet_prefixes[0]
-    target_fqdns = ["*.hcp.canadacentral.azmk8s.io",]
+    target_fqdns     = ["*.hcp.canadacentral.azmk8s.io", ]
     protocol {
       port = "443"
       type = "Https"
     }
   }
 
-rule {
-    name = "mcr.microsoft"
+  rule {
+    name             = "mcr.microsoft"
     source_addresses = module.spoke1network.subnet_prefixes[0]
-    target_fqdns = ["mcr.microsoft.com",]
+    target_fqdns     = ["mcr.microsoft.com", ]
     protocol {
       port = "443"
       type = "Https"
     }
   }
   rule {
-    name = "data.mcr.microsoft"
+    name             = "data.mcr.microsoft"
     source_addresses = module.spoke1network.subnet_prefixes[0]
-    target_fqdns = ["*.data.mcr.microsoft.com",]
+    target_fqdns     = ["*.data.mcr.microsoft.com", ]
     protocol {
       port = "443"
       type = "Https"
     }
   }
   rule {
-    name = "management.azure.com"
+    name             = "management.azure.com"
     source_addresses = module.spoke1network.subnet_prefixes[0]
-    target_fqdns = ["management.azure.com",]
+    target_fqdns     = ["management.azure.com", ]
     protocol {
       port = "443"
       type = "Https"
     }
   }
   rule {
-    name = "login.microsoftonline.com"
+    name             = "login.microsoftonline.com"
     source_addresses = module.spoke1network.subnet_prefixes[0]
-    target_fqdns = ["login.microsoftonline.com",]
+    target_fqdns     = ["login.microsoftonline.com", ]
     protocol {
       port = "443"
       type = "Https"
     }
   }
   rule {
-    name = "packages.microsoft.com"
+    name             = "packages.microsoft.com"
     source_addresses = module.spoke1network.subnet_prefixes[0]
-    target_fqdns = ["packages.microsoft.com",]
+    target_fqdns     = ["packages.microsoft.com", ]
     protocol {
       port = "443"
       type = "Https"
     }
   }
   rule {
-    name = "acs-mirror.azureedge.net"
+    name             = "acs-mirror.azureedge.net"
     source_addresses = module.spoke1network.subnet_prefixes[0]
-    target_fqdns = ["acs-mirror.azureedge.net",]
+    target_fqdns     = ["acs-mirror.azureedge.net", ]
     protocol {
       port = "443"
       type = "Https"
     }
   }
   rule {
-    name = "ubuntu"
+    name             = "ubuntu"
     source_addresses = module.spoke1network.subnet_prefixes[0]
-    target_fqdns = ["security.ubuntu.com", "azure.archive.ubuntu.com", "changelogs.ubuntu.com"]
+    target_fqdns     = ["security.ubuntu.com", "azure.archive.ubuntu.com", "changelogs.ubuntu.com"]
     protocol {
       port = "80"
       type = "Http"
