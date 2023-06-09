@@ -108,7 +108,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
 
   application_rule_collection {
     name     = "Allow_kubernetess_app_communication"
-    priority = 100
+    priority = 310
     action   = "Allow"
     rule {
       name              = "azmk8s.io"
