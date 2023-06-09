@@ -25,7 +25,7 @@ resource "azurerm_firewall" "hub" {
   name                = "hub_firewall"
   location            = var.location
   sku_name            = "AZFW_VNet"
-  sku_tier            = "Basic"
+  sku_tier            = "Standard"
   resource_group_name = module.hubnetwork.vnet_rg_name
 
   ip_configuration {
@@ -63,6 +63,44 @@ resource "azurerm_firewall_network_rule_collection" "rulecollection" {
 
     protocols = [
       "TCP"
+    ]
+  }
+
+  rule {
+    name = "spoke2-spoke1"
+
+    source_addresses = module.spoke2network.subnet_prefixes[0]
+    destination_ports = [
+      "22"
+    ]
+
+    destination_addresses = module.spoke1network.subnet_prefixes[0]
+
+    protocols = [
+      "TCP"
+    ]
+  }
+}
+
+resource "azurerm_firewall_network_rule_collection" "rulecollection" {
+  name                = "Allow_kubernetess_communication"
+  azure_firewall_name = azurerm_firewall.hub.name
+  resource_group_name = module.hubnetwork.vnet_rg_name
+  priority            = 300
+  action              = "Allow"
+
+  rule {
+    name = "Port_1194"
+    source_addresses = ["*" ]
+    destination_addresses = ["AzureCloud.canadacentral"]
+
+    destination_ports = [
+      "1194"
+    ]
+
+    
+    protocols = [
+      "UDP"
     ]
   }
 
