@@ -82,7 +82,7 @@ resource "azurerm_firewall_network_rule_collection" "rulecollection" {
   }
 }
 
-resource "azurerm_firewall_network_rule_collection" "rulecollection" {
+resource "azurerm_firewall_network_rule_collection" "rulecollection2" {
   name                = "Allow_kubernetess_communication"
   azure_firewall_name = azurerm_firewall.hub.name
   resource_group_name = module.hubnetwork.vnet_rg_name
@@ -90,32 +90,25 @@ resource "azurerm_firewall_network_rule_collection" "rulecollection" {
   action              = "Allow"
 
   rule {
-    name = "Port_1194"
-    source_addresses = ["*" ]
+    name                  = "Port_1194"
+    source_addresses      = ["*"]
     destination_addresses = ["AzureCloud.canadacentral"]
-
-    destination_ports = [
-      "1194"
-    ]
-
-    
-    protocols = [
-      "UDP"
-    ]
+    destination_ports     = ["1194"]
+    protocols             = ["UDP"]
   }
 
   rule {
-    name = "spoke2-spoke1"
-
-    source_addresses = module.spoke2network.subnet_prefixes[0]
-    destination_ports = [
-      "22"
-    ]
-
-    destination_addresses = module.spoke1network.subnet_prefixes[0]
-
-    protocols = [
-      "TCP"
-    ]
+    name                  = "Port_9000"
+    source_addresses      = ["*"]
+    destination_addresses = ["AzureCloud.canadacentral"]
+    destination_ports     = ["9000"]
+    protocols             = ["TCP"]
+  }
+  rule {
+    name              = "NTP"
+    source_addresses  = ["*"]
+    destination_fqdns = ["ntp.ubuntu.com"]
+    destination_ports = ["123"]
+    protocols         = ["UDP"]
   }
 }
