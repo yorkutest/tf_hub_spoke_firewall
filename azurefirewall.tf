@@ -69,7 +69,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
       source_addresses    = ["*"]
       destination_address = azurerm_public_ip.firewall.ip_address
       destination_ports   = ["443"]
-      translated_address  = "20.200.116.20"
+      translated_address  = "20.175.190.34"
       translated_port     = "443"
     }
   }
