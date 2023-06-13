@@ -51,6 +51,18 @@ spoke_web_rules = [
     destination_port_ranges    = "80"
     destination_address_prefix = "*"
     description                = "Allow web 80 to the spoke VMs"
+  },
+  {
+    name                       = "allow-web-https"
+    priority                   = "200"
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_ranges         = "*"
+    source_address_prefix      = "*"
+    destination_port_ranges    = "443"
+    destination_address_prefix = "*"
+    description                = "Allow web 443 to the spoke VMs"
   }
 ]
 
