@@ -180,7 +180,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
     rule {
       name              = "Extra Runner Urls"
       source_addresses  = ["*"]
-      destination_fqdns = ["quay.io"]
+      destination_fqdns = ["quay.io","*.quay.io"]
       protocols {
         port = "443"
         type = "Https"
