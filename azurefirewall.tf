@@ -173,5 +173,59 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
 
   }
 
+  application_rule_collection {
+    name     = "Allow_runner_communication"
+    priority = 360
+    action   = "Allow"
+    rule {
+      name              = "Extra Runner Urls"
+      source_addresses  = ["*"]
+      destination_fqdns = ["quay.io"]
+      protocols {
+        port = "443"
+        type = "Https"
+      }
+
+    }
+
+    rule {
+      name             = "Base Runner Urls"
+      source_addresses = ["*"]
+      destination_fqdns = [
+        "github.com",
+        "api.github.com",
+        "*.actions.githubusercontent.com",
+        "codeload.github.com",
+        "actions-results-receiver-production.githubapp.com",
+        "productionresultssa*.blob.core.windows.net",
+        "objects.githubusercontent.com",
+        "objects-origin.githubusercontent.com",
+        "github-releases.githubusercontent.com",
+        "github-registry-files.githubusercontent.com",
+        "*.blob.core.windows.net",
+        "*.actions.githubusercontent.com",
+        "*.pkg.github.com",
+        "ghcr.io"
+      ]
+      protocols {
+        port = "443"
+        type = "Https"
+      }
+    }
+    rule {
+      name              = "mcr"
+      source_addresses  = ["*"]
+      destination_fqdns = ["mcr.microsoft.com"]
+      protocols {
+        port = "443"
+        type = "Https"
+      }
+      protocols {
+        port = "80"
+        type = "Http"
+      }
+    }
+
+  }
 
 }
