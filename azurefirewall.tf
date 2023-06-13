@@ -91,6 +91,14 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
       destination_addresses = module.spoke1network.subnet_prefixes[0]
       protocols             = ["TCP"]
     }
+
+    rule {
+      name                  = "DNS"
+      source_addresses      = ["*"]
+      destination_ports     = ["53"]
+      destination_addresses = ["*"]
+      protocols             = ["Any"]
+    }
   }
 
   network_rule_collection {
@@ -99,7 +107,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
     action   = "Allow"
     rule {
       name                  = "Port_1194"
-      source_addresses      = module.spoke1network.subnet_prefixes[0]
+      source_addresses      = ["*"]
       destination_addresses = ["AzureCloud.${var.location}"]
       destination_ports     = ["1194"]
       protocols             = ["UDP"]
@@ -107,14 +115,14 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
 
     rule {
       name                  = "Port_9000"
-      source_addresses      = module.spoke1network.subnet_prefixes[0]
+      source_addresses      = ["*"]
       destination_addresses = ["AzureCloud.${var.location}"]
       destination_ports     = ["9000"]
       protocols             = ["TCP"]
     }
     rule {
       name              = "NTP"
-      source_addresses  = module.spoke1network.subnet_prefixes[0]
+      source_addresses  = ["*"]
       destination_fqdns = ["ntp.ubuntu.com"]
       destination_ports = ["123"]
       protocols         = ["UDP"]
@@ -148,15 +156,19 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
         type = "Http"
       }
     }
-    #rule {
-    #  name              = "mcr"
-    #  source_addresses  = module.spoke1network.subnet_prefixes[0]
-    #  destination_fqdns = ["mcr.microsoft.com"]
-    #  protocols {
-    #    port = "443"
-    #    type = "Https"
-    #  }
-    #}
+    rule {
+      name              = "mcr"
+      source_addresses  = ["*"]
+      destination_fqdns = ["mcr.microsoft.com"]
+      protocols {
+        port = "443"
+        type = "Https"
+      } 
+      protocols {
+        port = "80"
+        type = "Http"
+      }
+    }
 
   }
 
