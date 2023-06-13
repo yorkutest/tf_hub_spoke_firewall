@@ -57,6 +57,21 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
   firewall_policy_id = azurerm_firewall_policy.policy.id
   priority           = 100
 
+
+  nat_rule_collection {
+    name     = "nat_rule_collection1"
+    priority = 350
+    action   = "Dnat"
+    rule {
+      name                = "nat_rule_collection1_rule1"
+      protocols           = ["TCP", "UDP"]
+      source_addresses    = ["*"]
+      destination_address = azurerm_public_ip.firewall.ip_address
+      destination_ports   = ["443"]
+      translated_address  = "20.200.116.20"
+      translated_port     = "443"
+    }
+  }
   network_rule_collection {
     name     = "Allow_ssh_communications_between_spokes"
     priority = 100
