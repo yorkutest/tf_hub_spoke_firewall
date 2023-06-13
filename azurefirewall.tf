@@ -130,6 +130,34 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
     }
   }
 
+
+  network_rule_collection {
+    name     = "Allow_runner_network_communication"
+    priority = 310
+    action   = "Allow"
+    rule {
+      name             = "Runner Urls"
+      source_addresses = ["*"]
+      destination_fqdns = [
+        "github.com",
+        "api.github.com",
+        "*.actions.githubusercontent.com",
+        "codeload.github.com",
+        "actions-results-receiver-production.githubapp.com",
+        "objects.githubusercontent.com",
+        "objects-origin.githubusercontent.com",
+        "github-releases.githubusercontent.com",
+        "github-registry-files.githubusercontent.com",
+        "*.blob.core.windows.net",
+        "*.actions.githubusercontent.com",
+        "*.pkg.github.com",
+        "ghcr.io"
+      ]
+      destination_ports = ["443"]
+      protocols         = ["TCP"]
+    }
+  }
+
   application_rule_collection {
     name     = "Allow_kubernetess_app_communication"
     priority = 350
@@ -188,29 +216,6 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
 
     }
 
-    rule {
-      name             = "Base Runner Urls"
-      source_addresses = ["*"]
-      destination_fqdns = [
-        "github.com",
-        "api.github.com",
-        "*.actions.githubusercontent.com",
-        "codeload.github.com",
-        "actions-results-receiver-production.githubapp.com",
-        "objects.githubusercontent.com",
-        "objects-origin.githubusercontent.com",
-        "github-releases.githubusercontent.com",
-        "github-registry-files.githubusercontent.com",
-        "*.blob.core.windows.net",
-        "*.actions.githubusercontent.com",
-        "*.pkg.github.com",
-        "ghcr.io"
-      ]
-      protocols {
-        port = "443"
-        type = "Https"
-      }
-    }
     rule {
       name              = "mcr"
       source_addresses  = ["*"]
