@@ -141,16 +141,12 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
       destination_fqdns = [
         "github.com",
         "api.github.com",
-        "*.actions.githubusercontent.com",
         "codeload.github.com",
         "actions-results-receiver-production.githubapp.com",
         "objects.githubusercontent.com",
         "objects-origin.githubusercontent.com",
         "github-releases.githubusercontent.com",
         "github-registry-files.githubusercontent.com",
-        "*.blob.core.windows.net",
-        "*.actions.githubusercontent.com",
-        "*.pkg.github.com",
         "ghcr.io"
       ]
       destination_ports = ["443"]
@@ -216,6 +212,20 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
 
     }
 
+    rule {
+      name             = "Runner Urls"
+      source_addresses = ["*"]
+      destination_fqdns = [
+        "*.actions.githubusercontent.com",
+        "*.blob.core.windows.net",
+        "*.actions.githubusercontent.com",
+        "*.pkg.github.com"
+      ]
+      protocols {
+        port = "443"
+        type = "Https"
+      }
+    }
     rule {
       name              = "mcr"
       source_addresses  = ["*"]
