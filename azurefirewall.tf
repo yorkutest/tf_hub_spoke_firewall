@@ -28,6 +28,7 @@ resource "azurerm_firewall" "hub" {
   sku_tier            = "Standard"
   resource_group_name = module.hubnetwork.vnet_rg_name
 
+  firewall_policy_id = azurerm_firewall_policy.policy.id
   ip_configuration {
     name                 = "ipconfig1"
     subnet_id            = module.hubnetwork.vnet_subnets[0]
@@ -163,7 +164,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
       protocols {
         port = "443"
         type = "Https"
-      } 
+      }
       protocols {
         port = "80"
         type = "Http"
