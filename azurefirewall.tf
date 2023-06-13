@@ -60,7 +60,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
 
   nat_rule_collection {
     name     = "nat_rule_collection1"
-    priority = 350
+    priority = 100
     action   = "Dnat"
     rule {
       name                = "nat_rule_collection1_rule1"
@@ -74,7 +74,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
   }
   network_rule_collection {
     name     = "Allow_ssh_communications_between_spokes"
-    priority = 100
+    priority = 250
     action   = "Allow"
     rule {
       name                  = "spoke1-spoke2"
@@ -123,7 +123,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
 
   application_rule_collection {
     name     = "Allow_kubernetess_app_communication"
-    priority = 310
+    priority = 350
     action   = "Allow"
     rule {
       name                  = "Kubernetes"
