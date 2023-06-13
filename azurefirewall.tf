@@ -127,7 +127,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
     action   = "Allow"
     rule {
       name                  = "Kubernetes"
-      source_addresses      = module.spoke1network.subnet_prefixes[0]
+      source_addresses      = ["*"]
       destination_fqdn_tags = ["AzureKubernetesService", ]
       protocols {
         port = "443"
@@ -141,7 +141,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
 
     rule {
       name              = "ubuntu"
-      source_addresses  = module.spoke1network.subnet_prefixes[0]
+      source_addresses  = ["*"]
       destination_fqdns = ["security.ubuntu.com", "azure.archive.ubuntu.com", "changelogs.ubuntu.com"]
       protocols {
         port = "80"
