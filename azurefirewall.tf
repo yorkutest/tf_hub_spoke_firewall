@@ -148,6 +148,17 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
         type = "Http"
       }
     }
+    rule {
+      name              = "mcr"
+      source_addresses  = module.spoke1network.subnet_prefixes[0]
+      destination_fqdns = ["mcr.microsoft.com"]
+      protocols {
+        port = "443"
+        type = "Https"
+      }
+    }
+
   }
+
 
 }
