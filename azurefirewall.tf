@@ -197,7 +197,6 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
         "*.actions.githubusercontent.com",
         "codeload.github.com",
         "actions-results-receiver-production.githubapp.com",
-        "productionresultssa*.blob.core.windows.net",
         "objects.githubusercontent.com",
         "objects-origin.githubusercontent.com",
         "github-releases.githubusercontent.com",
