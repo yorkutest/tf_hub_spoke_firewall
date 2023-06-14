@@ -217,6 +217,15 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
         type = "Http"
       }
     }
+    rule {
+      name              = "azmk8s"
+      source_addresses  = ["*"]
+      destination_fqdns = ["*.hcp.canadacentral.azmk8s.io", ]
+      protocols {
+        port = "443"
+        type = "Https"
+      }
+    }
 
     rule {
       name              = "ubuntu"
@@ -270,19 +279,6 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
       protocols {
         port = "443"
         type = "Https"
-      }
-    }
-    rule {
-      name              = "mcr"
-      source_addresses  = ["*"]
-      destination_fqdns = ["mcr.microsoft.com"]
-      protocols {
-        port = "443"
-        type = "Https"
-      }
-      protocols {
-        port = "80"
-        type = "Http"
       }
     }
 
