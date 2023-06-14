@@ -59,15 +59,21 @@ resource "azurerm_monitor_diagnostic_setting" "example" {
   log_analytics_workspace_id     = azurerm_log_analytics_workspace.example.id
   log_analytics_destination_type = "Dedicated"
 
-  dynamic "enabled_log" {
-    for_each = local.fw_pip_diag_logs
-    content {
-      category = enabled_log.value
-
-      retention_policy {
-        enabled = false
-        days    = 0
-      }
+  #dynamic "enabled_log" {
+  #  for_each = local.fw_pip_diag_logs
+  #  content {
+  #    category = enabled_log.value
+  #    retention_policy {
+  #      enabled = false
+  #      days    = 0
+  #    }
+  #  }
+  #}
+  enabled_log {
+    category_group = "allLogs"
+    retention_policy {
+      enabled = false
+      days    = 0
     }
   }
 
