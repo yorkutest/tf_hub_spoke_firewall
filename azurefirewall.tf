@@ -56,16 +56,15 @@ data "azurerm_monitor_diagnostic_categories" "example" {
   resource_id = azurerm_firewall.hub.id
 }
 resource "azurerm_monitor_diagnostic_setting" "example" {
-  name               = "BasicDiags"
-  target_resource_id = azurerm_firewall.hub.id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.example.id
-  
+  name                           = "BasicDiags"
+  target_resource_id             = azurerm_firewall.hub.id
+  log_analytics_workspace_id     = azurerm_log_analytics_workspace.example.id
+  log_analytics_destination_type = "Dedicated"
 
-    dynamic "log" {
-    for_each = locals.fw_pip_diag_logs
+  dynamic "enabled_log" {
+    for_each = local.fw_pip_diag_logs
     content {
-      category = log.value
-      enabled  = true
+      category = enabled_log.value
 
       retention_policy {
         enabled = false

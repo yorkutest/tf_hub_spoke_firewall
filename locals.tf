@@ -1,1 +1,4 @@
-fw_pip_diag_logs     = ["AzureFirewallApplicationRule", "AzureFirewallNetworkRule", "AzureFirewallDnsProxy"]
+locals {
+
+  fw_pip_diag_logs = ["AzureFirewallApplicationRule", "AzureFirewallNetworkRule", "AzureFirewallDnsProxy"]
+}
