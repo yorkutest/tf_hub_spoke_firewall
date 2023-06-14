@@ -21,6 +21,7 @@ resource "azurerm_public_ip" "firewallmgmt" {
   domain_name_label   = "firewallmgmtpip-${random_id.randomidfirewall.hex}"
 }
 
+
 resource "azurerm_firewall" "hub" {
   name                = "hub_firewall"
   location            = var.location
@@ -44,6 +45,48 @@ resource "azurerm_firewall" "hub" {
   // The firewall seems to slow down the destroy process for all these objects. approx 66% speed up to allow hub to destroy first using this depends on statement
 }
 
+resource "azurerm_log_analytics_workspace" "example" {
+  name                = "vineet-test-fw-01"
+  location            = var.location
+  resource_group_name = module.hubnetwork.vnet_rg_name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+}
+data "azurerm_monitor_diagnostic_categories" "example" {
+  resource_id = azurerm_firewall.hub.id
+}
+resource "azurerm_monitor_diagnostic_setting" "example" {
+  name               = "BasicDiags"
+  target_resource_id = azurerm_firewall.hub.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.example.id
+  
+
+    dynamic "log" {
+    for_each = locals.fw_pip_diag_logs
+    content {
+      category = log.value
+      enabled  = true
+
+      retention_policy {
+        enabled = false
+        days    = 0
+      }
+    }
+  }
+
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = false
+      days    = 0
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [log, metric]
+  }
+}
 resource "azurerm_firewall_policy" "policy" {
   name                = "BasePolicy"
   resource_group_name = module.hubnetwork.vnet_rg_name
@@ -59,20 +102,20 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
   priority           = 100
 
 
-  nat_rule_collection {
-    name     = "nat_rule_collection1"
-    priority = 100
-    action   = "Dnat"
-    rule {
-      name                = "nat_rule_collection1_rule1"
-      protocols           = ["TCP", "UDP"]
-      source_addresses    = ["*"]
-      destination_address = azurerm_public_ip.firewall.ip_address
-      destination_ports   = ["443"]
-      translated_address  = "20.175.190.34"
-      translated_port     = "443"
-    }
-  }
+  #nat_rule_collection {
+  #  name     = "nat_rule_collection1"
+  #  priority = 100
+  #  action   = "Dnat"
+  #  rule {
+  #    name                = "nat_rule_collection1_rule1"
+  #    protocols           = ["TCP", "UDP"]
+  #    source_addresses    = ["*"]
+  #    destination_address = azurerm_public_ip.firewall.ip_address
+  #    destination_ports   = ["443"]
+  #    translated_address  = "20.175.190.34"
+  #    translated_port     = "443"
+  #  }
+  #}
   network_rule_collection {
     name     = "Allow_ssh_communications_between_spokes"
     priority = 250
