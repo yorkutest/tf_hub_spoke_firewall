@@ -52,9 +52,7 @@ resource "azurerm_log_analytics_workspace" "example" {
   sku                 = "PerGB2018"
   retention_in_days   = 30
 }
-data "azurerm_monitor_diagnostic_categories" "example" {
-  resource_id = azurerm_firewall.hub.id
-}
+
 resource "azurerm_monitor_diagnostic_setting" "example" {
   name                           = "BasicDiags"
   target_resource_id             = azurerm_firewall.hub.id
