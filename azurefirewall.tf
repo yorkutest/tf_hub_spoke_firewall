@@ -46,7 +46,7 @@ resource "azurerm_firewall" "hub" {
 }
 
 resource "azurerm_log_analytics_workspace" "example" {
-  name                = "vineet-test-fw-01"
+  name                = "vineet-test-la-01"
   location            = var.location
   resource_group_name = module.hubnetwork.vnet_rg_name
   sku                 = "PerGB2018"
