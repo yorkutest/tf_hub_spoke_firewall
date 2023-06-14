@@ -174,6 +174,13 @@ resource "azurerm_firewall_policy_rule_collection_group" "example" {
       destination_ports = ["123"]
       protocols         = ["UDP"]
     }
+    rule {
+      name                  = "Kubernetes_443"
+      source_addresses      = module.spoke1network.subnet_prefixes[0]
+      destination_ports     = ["443"]
+      destination_addresses = ["*"]
+      protocols             = ["TCP"]
+    }
   }
 
 
